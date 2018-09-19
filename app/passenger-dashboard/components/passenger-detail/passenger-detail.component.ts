@@ -7,12 +7,12 @@ import { Passenger } from '../../models/passenger.interface';
     styleUrls: ['passenger-detail.component.scss'],
     template: `
         <div>
-            <span 
+            <span
             class="status"
             [class.checked-in]="detail.checkedIn"></span>
             <div *ngIf="editing">
-                <input 
-                type="text" 
+                <input
+                type="text"
                 [value]="detail.fullname"
                 (input)="onNameChange(name.value)"
                 #name>
@@ -53,11 +53,11 @@ export class PassengerDetailComponent implements OnChanges, OnInit {
         if (changes.detail) {
             this.detail = Object.assign({}, changes.detail.currentValue);
         }
-        console.log('ngOnChanges();');
+        // console.log('ngOnChanges();');
     }
 
     ngOnInit() {
-        console.log('ngOnInit();');
+        // console.log('ngOnInit();');
     }
     onNameChange(value: string) {
         this.detail.fullname = value;
