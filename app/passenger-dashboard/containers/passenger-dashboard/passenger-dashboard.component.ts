@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Child, Passenger } from '../../models/passenger.interface'
+import { Passenger } from '../../models/passenger.interface'
 import { PassengerDashboardService } from '../../passenger-dashboard.service';
 
 @Component({
@@ -33,19 +33,29 @@ export class PassengerDashboardComponent implements OnInit {
     this.passengerService
       .getPassengers()
       .subscribe((data: Passenger[]) => this.passengers = data);
-  }
+    // this.passengerService.getPassenger(1)
+    //   .subscribe((data: Passenger) => {});
+      }
   handleEdit(event: Passenger) {
-    this.passengers = this.passengers.map((passenger: Passenger) => {
+    this.passengerService
+    .updatePassenger(event)
+    .subscribe((data: Passenger) => {
+      this.passengers = this.passengers.map((passenger: Passenger) => {
         if (passenger.id === event.id) {
           passenger = Object.assign({}, passenger, event);
         }
         return passenger;
-    });
+      });
+    })
     console.log(this.passengers);
   }
   handleRemove(event: Passenger) {
-    this.passengers = this.passengers.filter((passenger: Passenger) => {
-      return passenger.id !== event.id;
-    });
+    this.passengerService
+      .removePassenger(event)
+      .subscribe(() => {
+        this.passengers = this.passengers.filter((passenger: Passenger) => {
+          return passenger.id !== event.id;
+        });
+      });
   }
 }
